@@ -152,3 +152,15 @@ This is similar to applying a function to a numpy array---the function
 is applied on the array itself but but not metadata.
 It is also possible to use descriptors as metakeys, so the metadata
 can be derived dynamically from the data.
+
+
+## Implementation
+
+There are multiple ways to implement metainer.
+In fact, form (6) suggests that it is possible to track all the
+metakeys and metadata in a numpy record array or a pandas dataframe.
+Nevertheless, to maximize portability, we provide a simple
+implementation that only uses python's built-in data structures.
+Although some of the operations may scales as O(N^2), we do not expect
+metainer to be a performance bottleneck because the number of fields
+in a python object should be relatively small.
