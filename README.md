@@ -161,30 +161,39 @@ Although some of the operations may scales as O(N^2), we do not expect
 lict to be a performance bottleneck because the number of fields in a
 python object should be relatively small.
 
-The hierarchical examples above demostrate that licts are lists of
-three things: 1) data objects, 2) KMPs, and 3) another licts.
-This leads to two natural ways to implement licts.
+The hierarchical examples above demonstrate that licts are lists of
+three things: data objects, KMPs, and another licts.
+This leads to two natural ways to implement licts:
 
-Since KMPs is never needed outside lict's own algorithm, we may
-introduce a nested `Pair` class insider the `Lict` class to track all
-the KMPs.
-We can perform the `isinstance()` check against `Lict` and `Pair` to
-distinglish the multiple cases.
+1. We may simply define a `Lict` as a list of two-tuple, and introduce
+   a special key, e.g., `Default`, to track the unkeyed data object.
+   I.e.,
 
-Alternatively, we may simply define a `Lict` as a list of two-tuple,
-and introduce a special key, e.g., `None`, to track the unkeyed data
-object.
-I.e.,
+        normalized = [
+            (Default, unkeyed_object),
+            ...
+            (key,     keyed_object),
+            ...
+        ]
 
-    normalized = [
-        (None, unkeyed_object),
-        ...
-        (key,  keyed_object),
-        ...
-    ]
+2. Alternatively, since KMPs is never needed outside lict's own
+   algorithm, we may introduce a nested `Pair` class insider the
+   `Lict` class to track all the KMPs.
+   We can perform the `isinstance()` check against `Lict` and `Pair`
+   to distinguish the multiple cases.
 
-While this second approach is more uniform, and hence easier to
-implement, it makes returning a grouping result more tricky.
+The first approach uniformizes the different cases, and require an
+special hashable object `Default` as the special key.
+The second approach uses the class information to distinguish the
+different situations, and require an extra `Lict.Pair` nested class.
+
+The first approach is more uniform, easier to implement, and has
+better "coding taste".
+However, it makes returning a grouping result more tricky.
 Should we return a normal python list?
 Or should we return a `Lict` and pay the price that the returned list
 contains pairs instead of the objects themselves.
+
+Therefore, the default implementation of lict uses the second case.
+We will make the code easier to read by hiding the class testing in a
+single `matchkey()` function.
