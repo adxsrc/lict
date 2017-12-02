@@ -12,12 +12,12 @@ mixed structures.
 A trivial metainer does not have any metadata.
 Logically, it is simply a boxed python data object:
 
-    trivial = [data]
+    trivial = [data]                                                        (1)
 
 A simple (non-trivial) metainer contains multiple data objects and
 key-metadata pairs (KMPs):
 
-    simple = [
+    simple = [                                                              (2)
         data1,
         data2,
         ...,
@@ -43,7 +43,7 @@ of the metadata.
 By giving them a new name, e.g., "kind key" `kkey1`, we can "deepen"
 the hierarchy as:
 
-    simple -> [
+    simple -> [                                                             (3)
         data1,
         data2,
         ...,
@@ -58,7 +58,7 @@ metainer hierarchy.
 Alternatively, We are also free to use metainers for data and
 metadata:
 
-    hierarchical = [
+    hierarchical = [                                                        (4)
         data1,
         [data2, kkey2:keyd1],
         ...,
@@ -72,7 +72,7 @@ metadata:
 
 If we turn `hierarchical`'s KMPs into metainers, we obtain
 
-    hierarchical -> [
+    hierarchical -> [                                                       (5)
         data1,
         [data2, kkey2:keyd1],
         ...,
@@ -84,7 +84,7 @@ If we turn `hierarchical`'s KMPs into metainers, we obtain
 We can then "flatten" the hierarchical as `kkey1:mkey2`,
 `kkey2:keyd2`, ..., are all KMPs associated with `meta2`:
 
-    hierarchical -> [
+    hierarchical -> [                                                       (6)
         data1,
         [data2, kkey2:keyd1],
         ...,
@@ -96,7 +96,7 @@ We can then "flatten" the hierarchical as `kkey1:mkey2`,
 Conversely, we may "group" this metainer according to `kkey2`, which
 results:
 
-    hierarchical -> [
+    hierarchical -> [                                                       (7)
         data1,
         keyd1:data2,
         ...,
@@ -110,7 +110,7 @@ This metainer is very similar to the original definition of
 If we reorder the content in the above form and compare it
 side-by-side with the original definition, they become
 
-    hierarchical = [                     ~~> [
+    hierarchical = [                     ~~> [                              (8)
         data1,                               data1,
         [data2, kkey2:keyd1],                [meta1, kkey1:mkey1],
         ...,                                 ...,
