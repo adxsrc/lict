@@ -84,3 +84,6 @@ class Lict(list):
 
     def __repr__(self):
         return '['+', '.join(map(repr, self))+']'
+
+    def keys(self):
+        return Lict(*dict.fromkeys(self._getkey(item) for item in self))
