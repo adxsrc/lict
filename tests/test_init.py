@@ -30,3 +30,7 @@ def test_init_kwargs():
 def test_init_mixed():
     l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
     assert l == [0.1, 0.2, ('meta3', 0.3), ('meta4', 0.4)]
+
+def test_init_unboxing():
+    l = Lict(0.1, 0.2, Lict(0.3, 0.4, Lict(0.5, 0.6)))
+    assert l == [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]

@@ -87,8 +87,11 @@ class Lict(list):
         else:
             raise ValueError("append() takes exactly one metakey:metadata pair")
 
-        # Really append
-        super().append(item)
+        # Really extend or append
+        if isinstance(item, Lict) and item.allunkeyed(): # unkeyed value; unbox
+            super().extend(item)
+        else:
+            super().append(item)
 
     def __repr__(self):
         return '['+', '.join(map(repr, self))+']'
