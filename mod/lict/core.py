@@ -39,6 +39,9 @@ class Lict(list):
             hash(item[0]) # raise a TypeError if unhashable
             return super().__new__(cls, item)
 
+        def __repr__(self):
+            return ':'.join(map(repr, self))
+
     #==========================================================================
     def __init__(self, *args, **kwargs):
         for arg in args:
@@ -67,3 +70,6 @@ class Lict(list):
 
         # Really append
         super().append(item)
+
+    def __repr__(self):
+        return '['+', '.join(map(repr, self))+']'
