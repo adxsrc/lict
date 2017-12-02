@@ -16,7 +16,7 @@ Logically, it is simply a boxed python data object:
     trivial = [data]                                                        (1)
 
 A simple (non-trivial) lict contains multiple data objects and
-key-metadata pairs (KMPs):
+metakey-metadata pairs (MKDPs):
 
     simple = [                                                              (2)
         data1,
@@ -68,7 +68,7 @@ Alternatively, We are also free to use licts for data and metadata:
 
 ## Flattening and Grouping
 
-If we turn `hierarchical`'s KMPs into licts, we obtain
+If we turn `hierarchical`'s MKDPs into licts, we obtain
 
     hierarchical -> [                                                       (5)
         data1,
@@ -80,7 +80,7 @@ If we turn `hierarchical`'s KMPs into licts, we obtain
     ]
 
 We can then "flatten" the hierarchical as `kkey1:mkey2`,
-`kkey2:keyd2`, ..., are all KMPs associated with `meta2`:
+`kkey2:keyd2`, ..., are all MKDPs associated with `meta2`:
 
     hierarchical -> [                                                       (6)
         data1,
@@ -162,7 +162,7 @@ lict to be a performance bottleneck because the number of fields in a
 python object should be relatively small.
 
 The hierarchical examples above demonstrate that licts are lists of
-three things: data objects, KMPs, and another licts.
+three things: data objects, MKDPs, and another licts.
 This leads to two natural ways to implement licts:
 
 1. We may simply define a `Lict` as a list of two-tuple, and introduce
@@ -176,16 +176,16 @@ This leads to two natural ways to implement licts:
             ...
         ]
 
-2. Alternatively, since KMPs is never needed outside lict's own
-   algorithm, we may introduce a nested `Pair` class insider the
-   `Lict` class to track all the KMPs.
-   We can perform the `isinstance()` check against `Lict` and `Pair`
+2. Alternatively, since MKDPs is never needed outside lict's own
+   algorithm, we may introduce a nested `_Pair` class insider the
+   `Lict` class to track all the MKDPs.
+   We can perform the `isinstance()` check against `Lict` and `_Pair`
    to distinguish the multiple cases.
 
 The first approach uniformizes the different cases, and require an
 special hashable object `Default` as the special key.
 The second approach uses the class information to distinguish the
-different situations, and require an extra `Lict.Pair` nested class.
+different situations, and require an extra `Lict._Pair` nested class.
 
 The first approach is more uniform, easier to implement, and has
 better "coding taste".

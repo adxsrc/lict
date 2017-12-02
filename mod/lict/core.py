@@ -25,7 +25,16 @@ class Lict(list):
     """
 
     #==========================================================================
-    class Pair(tuple):
+    class _Pair(tuple):
+        """_Pair
+
+        Because lict's metakey-metadata pairs (MKDPs) are never needed
+        outside lict's own algorithm, we introduce this nested `_Pair`
+        class inside the `Lict` class to track all the MKDPs.  We can
+        perform the isinstance() check against `Lict` and `_Pair` to
+        distinguish the nature of the items in `Lict`.
+
+        """
         def __new__(cls, item):
             hash(item[0]) # raise a TypeError if unhashable
             return super().__new__(cls, item)
@@ -48,9 +57,9 @@ class Lict(list):
 
         # Handle keyed value
         elif lens == (2, 0):
-            item = self.Pair(args)
+            item = self._Pair(args)
         elif lens == (0, 1):
-            item = self.Pair(*kwargs.items())
+            item = self._Pair(*kwargs.items())
 
         # Invalid input
         else:
