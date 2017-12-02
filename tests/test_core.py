@@ -16,15 +16,21 @@
 from metainer import *
 import pytest
 
-def test_append():
-    m = Metainer()
+#==============================================================================
+m = Metainer()
 
+#------------------------------------------------------------------------------
+def test_append_strkey():
     m.append('meta', 0.1)
     assert m == [('meta', 0.1)]
 
+#------------------------------------------------------------------------------
+def test_append_hashablekey():
     m.append(None, 0.2)
     assert m == [('meta', 0.1), (None, 0.2)]
 
+#------------------------------------------------------------------------------
+def test_append_unhashablekey():
     with pytest.raises(TypeError) as e:
         m.append([], 0.3)
     assert m == [('meta', 0.1), (None, 0.2)]
