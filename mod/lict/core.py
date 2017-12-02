@@ -162,3 +162,15 @@ class Lict(list):
                     item.append(key, k)
             l.append(item)
         return l
+
+    def tree(self, *keys):
+        if len(keys) == 0:
+            return self
+        else:
+            g = self.values().group(keys[0])
+            l = Lict()
+            for k in g.keys():
+                f = g.select(k).values() # must be non-empty
+                t = f.tree(*keys[1:])
+                l.append(k, t[0] if t.istrivial() else t)
+            return l
