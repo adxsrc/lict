@@ -18,3 +18,7 @@ from lict import *
 def test_keys():
     l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
     assert l.keys() == [None, 'meta3', 'meta4']
+
+def test_values():
+    l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
+    assert l.values() == [0.1, 0.2, 0.3, 0.4]
