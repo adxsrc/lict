@@ -160,3 +160,31 @@ implementation that only uses python's built-in data structures.
 Although some of the operations may scales as O(N^2), we do not expect
 lict to be a performance bottleneck because the number of fields in a
 python object should be relatively small.
+
+The hierarchical examples above demostrate that licts are lists of
+three things: 1) data objects, 2) KMPs, and 3) another licts.
+This leads to two natural ways to implement licts.
+
+Since KMPs is never needed outside lict's own algorithm, we may
+introduce a nested `Pair` class insider the `Lict` class to track all
+the KMPs.
+We can perform the `isinstance()` check against `Lict` and `Pair` to
+distinglish the multiple cases.
+
+Alternatively, we may simply define a `Lict` as a list of two-tuple,
+and introduce a special key, e.g., `None`, to track the unkeyed data
+object.
+I.e.,
+
+    normalized = [
+        (None, unkeyed_object),
+        ...
+        (key,  keyed_object),
+        ...
+    ]
+
+While this second approach is more uniform, and hence easier to
+implement, it makes returning a grouping result more tricky.
+Should we return a normal python list?
+Or should we return a `Lict` and pay the price that the returned list
+contains pairs instead of the objects themselves.
