@@ -32,6 +32,26 @@ Any hashable python object `mkey1`, ..., which may be a string like
 metadata.
 
 
+## Hierarchical Metainers
+
+The metakeys themselves in the above example can be seen as metadata
+of the metadata.
+By calling them, e.g., "kind key" `kkey`, we can "deepen" the
+hierarchy as:
+
+    simple -> hierarchical = [
+        data1,
+        data2,
+        ...,
+        [meta1, kkey:mkey1],
+        [meta2, kkey:mkey2],
+        ...,
+    ]
+
+This demonstrates the power of metainer, as it is now possible to
+attach multiple metakey-metadata pairs to the metadata themselves!
+
+
 ## Behaviors
 
 A metainer propagates its method calls to its data but not its
