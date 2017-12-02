@@ -103,6 +103,32 @@ class Lict(list):
     def items(self):
         return Lict(*(self._getitem(item) for item in self))
 
+    #--------------------------------------------------------------------------
+    def isempty(self):
+        return len(self) == 0
+
+    def istrivial(self):
+        return len(self) == 1 and not isinstance(self[0], self._Pair)
+
+    def somekeyed(self):
+        for item in self:
+            if isinstance(item, self._Pair):
+                return True
+        return False
+
+    def someunkeyed(self):
+        for item in self:
+            if not isinstance(item, self._Pair):
+                return True
+        return False
+
+    def allkeyed(self):
+        return not self.someunkeyed()
+
+    def allunkeyed(self):
+        return not self.somekeyed()
+
+    #--------------------------------------------------------------------------
     def select(self, key=None):
         return Lict(*(item for item in self if self._getkey(item) == key))
 
