@@ -24,6 +24,9 @@ class Lict(list):
 
     """
 
+    class Pair(tuple):
+        pass
+
     def __init__(self, *args, **kwargs):
         for arg in args:
             self.append(arg)
@@ -32,13 +35,14 @@ class Lict(list):
 
     def append(self, *args, **kwargs):
         if   len(args)   == 1:
-            key, value = None, args[0]
+            super().append(args[0])
         elif len(args)   == 2:
-            key, value = args
+            p = self.Pair(args)
+            hash(p[0])
+            super().append(p)
         elif len(kwargs) == 1:
-            key, value = next(iter(kwargs.items()))
+            p = self.Pair(*kwargs.items())
+            hash(p[0])
+            super().append(p)
         else:
             raise ValueError("append() takes exactly one metakey:metadata pair")
-
-        hash(key)
-        super().append((key, value))

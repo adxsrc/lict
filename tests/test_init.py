@@ -17,11 +17,11 @@ from lict import *
 
 def test_init_arg():
     l = Lict(0.1)
-    assert l == [(None, 0.1)]
+    assert l == [0.1]
 
 def test_init_args():
     l = Lict(0.1, 0.2, 0.3)
-    assert l == [(None, 0.1), (None, 0.2), (None, 0.3)]
+    assert l == [0.1, 0.2, 0.3]
 
 def test_init_kwargs():
     l = Lict(meta1=0.1, meta2=0.2, meta3=0.3)
@@ -29,4 +29,4 @@ def test_init_kwargs():
 
 def test_init_mixed():
     l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
-    assert l == [(None, 0.1), (None, 0.2), ('meta3', 0.3), ('meta4', 0.4)]
+    assert l == [0.1, 0.2, ('meta3', 0.3), ('meta4', 0.4)]
