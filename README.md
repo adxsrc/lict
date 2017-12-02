@@ -120,7 +120,27 @@ side-by-side with the original definition, they become
     ]                                    ]
 
 
-## Behaviors
+## Default Grouping/Mount and Behaviors
+
+Form (8) demonstrates that the default values of `hierarchical`
+depends on how its metadata are grouped.
+In general, even the number of default data objects can depends on the
+grouping.
+
+Metainers has three features to address this.
+
+1. It is possible to set the default grouping/mount.
+   This allows users to adjust the view of a metainer according to its
+   application.
+
+2. There are use cases that we need multiple views of the same
+   metainer.
+   It is possible to create additional views based on a different
+   default grouping/mount.
+
+3. Because the default values and/or a key may return multiple data
+   objects, metainer data access always return a new metainer that
+   containts the proper data objects.
 
 A metainer propagates its method calls to its data but not its
 metadata.
