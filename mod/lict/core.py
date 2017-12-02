@@ -46,8 +46,12 @@ class Lict(list):
 
     #--------------------------------------------------------------------------
     @classmethod
+    def _getkey(cls, item):
+        return item[0] if isinstance(item, cls._Pair) else None
+
+    @classmethod
     def _matchkey(cls, item, key):
-        return key == (item[0] if isinstance(item, cls._Pair) else None)
+        return key == cls._getkey(item)
 
     #==========================================================================
     def __init__(self, *args, **kwargs):
