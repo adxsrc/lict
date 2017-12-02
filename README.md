@@ -12,12 +12,12 @@ mixed structures.
 A trivial metainer does not have any metadata.
 Logically, it is simply a boxed python data object:
 
-    trivial ~ [data]
+    trivial = [data]
 
 A simple (non-trivial) metainer contains multiple data objects and
 key-metadata pairs (KMPs):
 
-    simple ~ [
+    simple = [
         data1,
         data2,
         ...,
@@ -34,21 +34,21 @@ metadata.
 
 ## Hierarchical Metainers
 
-`Metainer` is designed for hierarchical orignization of data and
+`Metainer` is designed for hierarchical origination of data and
 metadata.
 Its power comes from nesting different levels of metainers together.
 
 In the above example, the metakeys themselves can be seen as metadata
 of the metadata.
-By giving them a new name, e.g., "kind key" `kkey`, we can "deepen"
+By giving them a new name, e.g., "kind key" `kkey1`, we can "deepen"
 the hierarchy as:
 
     simple -> [
         data1,
         data2,
         ...,
-        [meta1, kkey:mkey1],
-        [meta2, kkey:mkey2],
+        [meta1, kkey1:mkey1],
+        [meta2, kkey1:mkey2],
         ...,
     ]
 
@@ -60,10 +60,10 @@ metadata:
 
     hierarchical = [
         data1,
-        [data2, mkd2:mtd2, ...],
+        [data2, kkey2:keyd1],
         ...,
         mkey1:meta1,
-        mkey2:[meta2, mkm2:mtm2, ...],
+        mkey2:[meta2, kkey2:keyd2, ...],
         ...,
     ]
 
@@ -74,24 +74,50 @@ If we turn `hierarchical`'s KMPs into metainers, we obtain
 
     hierarchical -> [
         data1,
-        [data2, mkd2:mtd2, ...],
+        [data2, kkey2:keyd1],
         ...,
-        [meta1, kkey:mkey1],
-        [[meta2, mkm2:mtm2, ...], kkey:mkey2],
+        [meta1, kkey1:mkey1],
+        [[meta2, kkey2:keyd2, ...], kkey1:mkey2],
         ...,
     ]
 
-We can then "flatten" the hierarchical as `kkey:mkey2`, `mkm2:mtm2`,
-..., are all KMPs associated with `meta2`:
+We can then "flatten" the hierarchical as `kkey1:mkey2`,
+`kkey2:keyd2`, ..., are all KMPs associated with `meta2`:
 
     hierarchical -> [
         data1,
-        [data2, mkd2:mtd2, ...],
+        [data2, kkey2:keyd1],
         ...,
-        [meta1, kkey:mkey1],
-        [meta2, kkey:mkey2, mkm2:mtm2, ...],
+        [meta1, kkey1:mkey1],
+        [meta2, kkey1:mkey2, kkey2:keyd2, ...],
         ...,
     ]
+
+Conversely, we may "group" this metainer according to `kkey2`, which
+results:
+
+    hierarchical -> [
+        data1,
+        keyd1:data2,
+        ...,
+        [meta1, kkey1:mkey1],
+        keyd2:[meta2, kkey1:mkey2, ...],
+        ...,
+    ]
+
+This metainer is very similar to the original definition of
+`hierarchical`.
+If we reorder the content in the above form and compare it
+side-by-side with the original definition, they become
+
+    hierarchical = [                     ~~> [
+        data1,                               data1,
+        [data2, kkey2:keyd1],                [meta1, kkey1:mkey1],
+        ...,                                 ...,
+        mkey1:meta1,                         keyd1:data2,
+        mkey2:[meta2, kkey2:keyd2, ...],     keyd2:[meta2, kkey1:mkey2, ...],
+        ...,                                 ...,
+    ]                                    ]
 
 
 ## Behaviors
