@@ -23,6 +23,12 @@ class Metainer(list):
 
     """
 
+    def __init__(self, *args, **kwargs):
+        for arg in args:
+            self.append(arg)
+        for k, v in kwargs.items():
+            self.append(k, v)
+
     def append(self, *args, **kwargs):
         if   len(args)   == 1:
             key, value = None, args[0]

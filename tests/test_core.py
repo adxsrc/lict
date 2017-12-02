@@ -16,11 +16,14 @@
 from metainer import *
 import pytest
 
-#==============================================================================
-m = Metainer()
+m = None
 
-#------------------------------------------------------------------------------
+#==============================================================================
 def test_append_strkey():
+    global m
+
+    m = Metainer()
+
     m.append('meta', 0.1)
     assert m == [('meta', 0.1)]
 
@@ -54,3 +57,13 @@ def test_append_kwargs():
         m.append(meta4=0.4, meta5=0.5, meta6=0.6)
     assert m == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
     assert str(e.value) == "append() takes exactly one metakey:metadata pair"
+
+#==============================================================================
+def test_init():
+    global m
+
+    m = Metainer(0.1, 0.2, meta=0.3)
+    assert m == [(None, 0.1), (None, 0.2), ('meta', 0.3)]
+
+    m.append('meta', 0.4)
+    assert m == [(None, 0.1), (None, 0.2), ('meta', 0.3), ('meta', 0.4)]
