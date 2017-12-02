@@ -13,4 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .core import *
+class Metainer(list):
+    """Metainer
+
+    A simple, flexible, and transformable metadata-based container for
+    building interpolate data classes.  It is similar to a python
+    dictionary or namedtuple, except its keys/names can be transformed
+    seamlessly among hierarchical, flat, and mixed structures.
+
+    """
+    pass
