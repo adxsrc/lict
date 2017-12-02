@@ -22,3 +22,7 @@ def test_keys():
 def test_values():
     l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
     assert l.values() == [0.1, 0.2, 0.3, 0.4]
+
+def test_items():
+    l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
+    assert l.items() == [(None,0.1), (None,0.2), ('meta3',0.3), ('meta4',0.4)]

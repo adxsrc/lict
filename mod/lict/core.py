@@ -54,6 +54,10 @@ class Lict(list):
         return item[1] if isinstance(item, cls._Pair) else item
 
     @classmethod
+    def _getitem(cls, item):
+        return item if isinstance(item, cls._Pair) else cls._Pair((None, item))
+
+    @classmethod
     def _matchkey(cls, item, key):
         return key == cls._getkey(item)
 
@@ -95,3 +99,6 @@ class Lict(list):
 
     def values(self):
         return Lict(*(self._getvalue(item) for item in self))
+
+    def items(self):
+        return Lict(*(self._getitem(item) for item in self))
