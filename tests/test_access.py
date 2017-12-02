@@ -26,3 +26,9 @@ def test_values():
 def test_items():
     l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
     assert l.items() == [(None,0.1), (None,0.2), ('meta3',0.3), ('meta4',0.4)]
+
+def test_select():
+    l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
+    assert l.select()        == [0.1, 0.2]
+    assert l.select('meta3') == [('meta3', 0.3)]
+    assert l.select('meta4') == [('meta4', 0.4)]

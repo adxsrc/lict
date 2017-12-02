@@ -102,3 +102,6 @@ class Lict(list):
 
     def items(self):
         return Lict(*(self._getitem(item) for item in self))
+
+    def select(self, key=None):
+        return Lict(*(item for item in self if self._getkey(item) == key))
