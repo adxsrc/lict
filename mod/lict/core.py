@@ -35,6 +35,8 @@ class Lict(list):
         distinguish the nature of the items in `Lict`.
 
         """
+        __slots__ = ()
+
         def __new__(cls, item):
             hash(item[0]) # raise a TypeError if unhashable
             return super().__new__(cls, item)
