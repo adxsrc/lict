@@ -105,3 +105,19 @@ class Lict(list):
 
     def select(self, key=None):
         return Lict(*(item for item in self if self._getkey(item) == key))
+
+    def group(self, key):
+        l = Lict()
+        for item in self:
+            if isinstance(item, self._Pair):
+                raise ValueError('group() works only for unkeyed lict')
+            if isinstance(item, Lict):
+                s = item.select(key)
+                if s:
+                    for k in s.values():
+                        l.append(k, item)
+                else:
+                    l.append(item) # key not found
+            else:
+                l.append(item) # not a lict
+        return l
