@@ -13,21 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from metainer import *
-import pytest
+from lict import *
 
 def test_init_arg():
-    m = Metainer(0.1)
-    assert m == [(None, 0.1)]
+    l = Lict(0.1)
+    assert l == [(None, 0.1)]
 
 def test_init_args():
-    m = Metainer(0.1, 0.2, 0.3)
-    assert m == [(None, 0.1), (None, 0.2), (None, 0.3)]
+    l = Lict(0.1, 0.2, 0.3)
+    assert l == [(None, 0.1), (None, 0.2), (None, 0.3)]
 
 def test_init_kwargs():
-    m = Metainer(meta1=0.1, meta2=0.2, meta3=0.3)
-    assert m == [('meta1', 0.1), ('meta2', 0.2), ('meta3', 0.3)]
+    l = Lict(meta1=0.1, meta2=0.2, meta3=0.3)
+    assert l == [('meta1', 0.1), ('meta2', 0.2), ('meta3', 0.3)]
 
 def test_init_mixed():
-    m = Metainer(0.1, 0.2, meta3=0.3, meta4=0.4)
-    assert m == [(None, 0.1), (None, 0.2), ('meta3', 0.3), ('meta4', 0.4)]
+    l = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
+    assert l == [(None, 0.1), (None, 0.2), ('meta3', 0.3), ('meta4', 0.4)]

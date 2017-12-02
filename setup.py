@@ -18,13 +18,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='metainer',
+    name='lict',
     version='0.1.0',
-    url='https://github.com/hallmarksrc/metainer',
+    url='https://github.com/hallmarksrc/lict',
     author='Chi-kwan Chan',
     author_email='ckchan@cfa.harvard.edu',
-    description='A metadata-based container for building interpolatable python classes',
+    description='A hybrid list-dict container for building interpolatable python classes',
     packages=find_packages('mod'),
     package_dir={'': 'mod'},
-    python_requires='>=3.6', # `metainer` uses python3's f-string and typing
+    python_requires='>=3.6', # `lict` uses python3's f-string and typing
 )

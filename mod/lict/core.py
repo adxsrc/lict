@@ -13,13 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class Metainer(list):
-    """Metainer
+class Lict(list):
+    """Lict
 
-    A simple, flexible, and transformable metadata-based container for
-    building interpolate data classes.  It is similar to a python
-    dictionary or namedtuple, except its keys/names can be transformed
-    seamlessly among hierarchical, flat, and mixed structures.
+    `Lict` is a hybrid list-dict container.  It supports
+    metadata-based object management by allowing its keys/names to be
+    transformed seamlessly among hierarchical, flat, and mixed
+    structures.  Its simple, flexible, and transformable design is
+    ideal for building interpolatable python classes.
 
     """
 

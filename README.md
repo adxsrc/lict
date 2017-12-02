@@ -1,20 +1,21 @@
-# `Metainer`
+# `Lict`
 
-`Metainer` is a simple, flexible, and transformable metadata-based
-container for building interpolate data classes.
-It is similar to a python dictionary or namedtuple, except its
-keys/names can be transformed seamlessly among hierarchical, flat, and
+`Lict` is a hybrid list-dict container.
+It supports metadata-based object management by allowing its
+keys/names to be transformed seamlessly among hierarchical, flat, and
 mixed structures.
+Its simple, flexible, and transformable design is ideal for building
+interpolatable python classes.
 
 
-## Basic Metainers
+## Basic Licts
 
-A trivial metainer does not have any metadata.
+A trivial lict does not have any metadata.
 Logically, it is simply a boxed python data object:
 
     trivial = [data]                                                        (1)
 
-A simple (non-trivial) metainer contains multiple data objects and
+A simple (non-trivial) lict contains multiple data objects and
 key-metadata pairs (KMPs):
 
     simple = [                                                              (2)
@@ -27,16 +28,14 @@ key-metadata pairs (KMPs):
     ]
 
 Any hashable python object `mkey1`, ..., which may be a string like
-`'meta'`, can be used as metainer's metakey; any python object
-`meta1`, ..., including another metainer, can be used as metainer's
-metadata.
+`'meta'`, can be used as lict's metakey; any python object `meta1`,
+..., including another lict, can be used as lict's metadata.
 
 
-## Hierarchical Metainers
+## Hierarchical Licts
 
-`Metainer` is designed for hierarchical origination of data and
-metadata.
-Its power comes from nesting different levels of metainers together.
+`Lict` is designed for hierarchical origination of data and metadata.
+Its power comes from nesting different levels of licts together.
 
 In the above example, the metakeys themselves can be seen as metadata
 of the metadata.
@@ -53,10 +52,9 @@ the hierarchy as:
     ]
 
 The metadata `meta1` and `meta2` now are simply data nested in deeper
-metainer hierarchy.
+lict hierarchy.
 
-Alternatively, We are also free to use metainers for data and
-metadata:
+Alternatively, We are also free to use licts for data and metadata:
 
     hierarchical = [                                                        (4)
         data1,
@@ -70,7 +68,7 @@ metadata:
 
 ## Flattening and Grouping
 
-If we turn `hierarchical`'s KMPs into metainers, we obtain
+If we turn `hierarchical`'s KMPs into licts, we obtain
 
     hierarchical -> [                                                       (5)
         data1,
@@ -93,7 +91,7 @@ We can then "flatten" the hierarchical as `kkey1:mkey2`,
         ...,
     ]
 
-Conversely, we may "group" this metainer according to `kkey2`, which
+Conversely, we may "group" this lict according to `kkey2`, which
 results:
 
     hierarchical -> [                                                       (7)
@@ -105,7 +103,7 @@ results:
         ...,
     ]
 
-This metainer is very similar to the original definition of
+This lict is very similar to the original definition of
 `hierarchical`.
 If we reorder the content in the above form and compare it
 side-by-side with the original definition, they become
@@ -127,23 +125,21 @@ depends on how its metadata are grouped.
 In general, even the number of default data objects can depends on the
 grouping.
 
-Metainers has three features to address this.
+Licts has three features to address this.
 
 1. It is possible to set the default grouping/mount.
-   This allows users to adjust the view of a metainer according to its
+   This allows users to adjust the view of a lict according to its
    application.
 
-2. There are use cases that we need multiple views of the same
-   metainer.
+2. There are use cases that we need multiple views of the same lict.
    It is possible to create additional views based on a different
    default grouping/mount.
 
 3. Because the default values and/or a key may return multiple data
-   objects, metainer data access always return a new metainer that
-   containts the proper data objects.
+   objects, lict data access always return a new lict that contains
+   the proper data objects.
 
-A metainer propagates its method calls to its data but not its
-metadata.
+A lict propagates its method calls to its data but not its metadata.
 Hence,
 
     simple.method() -> simple.data1.method(); simple.data2.method()
@@ -156,11 +152,11 @@ can be derived dynamically from the data.
 
 ## Implementation
 
-There are multiple ways to implement metainer.
+There are multiple ways to implement lict.
 In fact, form (6) suggests that it is possible to track all the
 metakeys and metadata in a numpy record array or a pandas dataframe.
 Nevertheless, to maximize portability, we provide a simple
 implementation that only uses python's built-in data structures.
 Although some of the operations may scales as O(N^2), we do not expect
-metainer to be a performance bottleneck because the number of fields
-in a python object should be relatively small.
+lict to be a performance bottleneck because the number of fields in a
+python object should be relatively small.

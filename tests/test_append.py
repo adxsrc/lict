@@ -13,37 +13,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from metainer import *
+from lict import *
+
 import pytest
 
-m = Metainer()
+l = Lict()
 
 def test_append_strkey():
-    m.append('meta', 0.1)
-    assert m == [('meta', 0.1)]
+    l.append('meta', 0.1)
+    assert l == [('meta', 0.1)]
 
 def test_append_kwarg():
-    m.append(meta=0.2)
-    assert m == [('meta', 0.1), ('meta', 0.2)]
+    l.append(meta=0.2)
+    assert l == [('meta', 0.1), ('meta', 0.2)]
 
 def test_append_hashablekey():
-    m.append(0.3)
-    assert m == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
+    l.append(0.3)
+    assert l == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
 
 def test_append_unhashablekey():
     with pytest.raises(TypeError) as e:
-        m.append([], 0.4)
-    assert m == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
+        l.append([], 0.4)
+    assert l == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
     assert str(e.value) == "unhashable type: 'list'"
 
 def test_append_args():
     with pytest.raises(ValueError) as e:
-        m.append(0.4, 0.5, 0.6)
-    assert m == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
+        l.append(0.4, 0.5, 0.6)
+    assert l == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
     assert str(e.value) == "append() takes exactly one metakey:metadata pair"
 
 def test_append_kwargs():
     with pytest.raises(ValueError) as e:
-        m.append(meta4=0.4, meta5=0.5, meta6=0.6)
-    assert m == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
+        l.append(meta4=0.4, meta5=0.5, meta6=0.6)
+    assert l == [('meta', 0.1), ('meta', 0.2), (None, 0.3)]
     assert str(e.value) == "append() takes exactly one metakey:metadata pair"
