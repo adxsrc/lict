@@ -24,4 +24,5 @@ class Metainer(list):
     """
 
     def append(self, key, value):
+        hash(key)
         super().append((key, value))

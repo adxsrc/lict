@@ -14,8 +14,18 @@
 # limitations under the License.
 
 from metainer import *
+import pytest
 
 def test_append():
     m = Metainer()
+
     m.append('meta', 0.1)
     assert m == [('meta', 0.1)]
+
+    m.append(None, 0.2)
+    assert m == [('meta', 0.1), (None, 0.2)]
+
+    with pytest.raises(TypeError) as e:
+        m.append([], 0.3)
+    assert m == [('meta', 0.1), (None, 0.2)]
+    assert str(e.value) == "unhashable type: 'list'"
