@@ -121,3 +121,15 @@ class Lict(list):
             else:
                 l.append(item) # not a lict
         return l
+
+    def ungroup(self, key):
+        l = Lict()
+        for item in self:
+            if isinstance(item, self._Pair):
+                k, item = item
+                if not isinstance(item, Lict):
+                    item = Lict(item)
+                if k not in item.select(key).values():
+                    item.append(key, k)
+            l.append(item)
+        return l
