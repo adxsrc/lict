@@ -15,12 +15,12 @@ Logically, it is simply a boxed python data object:
     trivial ~ [data]
 
 A simple (non-trivial) metainer contains multiple data objects and
-metakey-metadata pairs:
+key-metadata pairs (KMPs):
 
     simple ~ [
         data1,
         data2,
-        ...
+        ...,
         mkey1:meta1,
         mkey2:meta2,
         ...,
@@ -34,12 +34,16 @@ metadata.
 
 ## Hierarchical Metainers
 
-The metakeys themselves in the above example can be seen as metadata
-of the metadata.
-By calling them, e.g., "kind key" `kkey`, we can "deepen" the
-hierarchy as:
+`Metainer` is designed for hierarchical orignization of data and
+metadata.
+Its power comes from nesting different levels of metainers together.
 
-    simple -> hierarchical = [
+In the above example, the metakeys themselves can be seen as metadata
+of the metadata.
+By giving them a new name, e.g., "kind key" `kkey`, we can "deepen"
+the hierarchy as:
+
+    simple -> [
         data1,
         data2,
         ...,
@@ -48,8 +52,46 @@ hierarchy as:
         ...,
     ]
 
-This demonstrates the power of metainer, as it is now possible to
-attach multiple metakey-metadata pairs to the metadata themselves!
+The metadata `meta1` and `meta2` now are simply data nested in deeper
+metainer hierarchy.
+
+Alternatively, We are also free to use metainers for data and
+metadata:
+
+    hierarchical = [
+        data1,
+        [data2, mkd2:mtd2, ...],
+        ...,
+        mkey1:meta1,
+        mkey2:[meta2, mkm2:mtm2, ...],
+        ...,
+    ]
+
+
+## Flattening and Grouping
+
+If we turn `hierarchical`'s KMPs into metainers, we obtain
+
+    hierarchical -> [
+        data1,
+        [data2, mkd2:mtd2, ...],
+        ...,
+        [meta1, kkey:mkey1],
+        [[meta2, mkm2:mtm2, ...], kkey:mkey2],
+        ...,
+    ]
+
+We can then "flatten" the hierarchical as `kkey:mkey2`, `mkm2:mtm2`,
+..., are all KMPs associated with `meta2`:
+
+    hierarchical -> [
+        data1,
+        [data2, mkd2:mtd2, ...],
+        ...,
+        [meta1, kkey:mkey1],
+        [meta2, kkey:mkey2, mkm2:mtm2, ...],
+        ...,
+    ]
 
 
 ## Behaviors
