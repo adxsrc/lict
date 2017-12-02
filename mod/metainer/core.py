@@ -22,4 +22,6 @@ class Metainer(list):
     seamlessly among hierarchical, flat, and mixed structures.
 
     """
-    pass
+
+    def append(self, key, value):
+        super().append((key, value))

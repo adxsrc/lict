@@ -15,6 +15,7 @@
 
 from metainer import *
 
-def test_metainer():
+def test_append():
     m = Metainer()
-    assert m is not None
+    m.append('meta', 0.1)
+    assert m == [('meta', 0.1)]
