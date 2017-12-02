@@ -44,6 +44,11 @@ class Lict(list):
         def __repr__(self):
             return ':'.join(map(repr, self))
 
+    #--------------------------------------------------------------------------
+    @classmethod
+    def _matchkey(cls, item, key):
+        return key == (item[0] if isinstance(item, cls._Pair) else None)
+
     #==========================================================================
     def __init__(self, *args, **kwargs):
         for arg in args:

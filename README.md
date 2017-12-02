@@ -196,4 +196,4 @@ contains pairs instead of the objects themselves.
 
 Therefore, the default implementation of lict uses the second case.
 We will make the code easier to read by hiding the class testing in a
-single `matchkey()` function.
+single `Lict._matchkey()` class method.
