@@ -47,3 +47,9 @@ def test_append_kwargs():
         l.append(meta4=0.4, meta5=0.5, meta6=0.6)
     assert l == [('meta', 0.1), ('meta', 0.2), 0.3]
     assert str(e.value) == "append() takes exactly one metakey:metadata pair"
+
+def test_append_mixed():
+    with pytest.raises(ValueError) as e:
+        l.append(0.4, meta4=0.4)
+    assert l == [('meta', 0.1), ('meta', 0.2), 0.3]
+    assert str(e.value) == "append() takes exactly one metakey:metadata pair"

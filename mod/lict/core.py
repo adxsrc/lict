@@ -24,9 +24,13 @@ class Lict(list):
 
     """
 
+    #==========================================================================
     class Pair(tuple):
-        pass
+        def __new__(cls, item):
+            hash(item[0]) # raise a TypeError if unhashable
+            return super().__new__(cls, item)
 
+    #==========================================================================
     def __init__(self, *args, **kwargs):
         for arg in args:
             self.append(arg)
@@ -34,15 +38,23 @@ class Lict(list):
             self.append(k, v)
 
     def append(self, *args, **kwargs):
-        if   len(args)   == 1:
-            super().append(args[0])
-        elif len(args)   == 2:
-            p = self.Pair(args)
-            hash(p[0])
-            super().append(p)
-        elif len(kwargs) == 1:
-            p = self.Pair(*kwargs.items())
-            hash(p[0])
-            super().append(p)
+        lens = len(args), len(kwargs)
+
+        # Handle unkeyed value
+        if   lens == (1, 0):
+            item = args[0]
+        elif lens == (2, 0) and args[0] is None:
+            item = args[1]
+
+        # Handle keyed value
+        elif lens == (2, 0):
+            item = self.Pair(args)
+        elif lens == (0, 1):
+            item = self.Pair(*kwargs.items())
+
+        # Invalid input
         else:
             raise ValueError("append() takes exactly one metakey:metadata pair")
+
+        # Really append
+        super().append(item)
