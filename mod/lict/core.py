@@ -94,7 +94,10 @@ class Lict(list):
             super().append(item)
 
     def __repr__(self):
-        return '['+', '.join(map(repr, self))+']'
+        if '__name__' in self.keys():
+            return '_'.join(self.select('__name__').values())
+        else:
+            return '['+', '.join(map(repr, self))+']'
 
     #--------------------------------------------------------------------------
     def keys(self):
