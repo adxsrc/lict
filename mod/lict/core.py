@@ -25,6 +25,8 @@ class Lict(list):
     """
 
     #==========================================================================
+    # Nested "private" class to hold metakey-metadata pair
+
     class _Pair(tuple):
         """_Pair
 
@@ -45,6 +47,8 @@ class Lict(list):
             return ':'.join(map(repr, self))
 
     #--------------------------------------------------------------------------
+    # Logical `_Pair` getters that do not assume `item` is `_Pair`
+
     @classmethod
     def _getkey(cls, item):
         return item[0] if isinstance(item, cls._Pair) else None
@@ -62,6 +66,8 @@ class Lict(list):
         return key == cls._getkey(item)
 
     #==========================================================================
+    # Input and initialization
+
     def __init__(self, *args, **kwargs):
         for arg in args:
             self.append(arg)
@@ -93,13 +99,9 @@ class Lict(list):
         else:
             super().append(item)
 
-    def __repr__(self):
-        if '__name__' in self.keys():
-            return '_'.join(self.select('__name__').values())
-        else:
-            return '['+', '.join(map(repr, self))+']'
-
     #--------------------------------------------------------------------------
+    # Output
+    #
     # Python has multiple ways to access elements from dictionary.
     # The `[]` operator is equivalent to calling `__getitem__()`.
     # However, python dictionary also provides the `get()` method.
@@ -124,6 +126,15 @@ class Lict(list):
         else:
             return f.values()
 
+    def __repr__(self):
+        if '__name__' in self.keys():
+            return '_'.join(self.select('__name__').values())
+        else:
+            return '['+', '.join(map(repr, self))+']'
+
+    #--------------------------------------------------------------------------
+    # Lict casting; TODO: turn results into views
+
     def keys(self):
         return Lict(*dict.fromkeys(self._getkey(item) for item in self))
 
@@ -134,6 +145,8 @@ class Lict(list):
         return Lict(*(self._getitem(item) for item in self))
 
     #--------------------------------------------------------------------------
+    # Characteristics reporting
+
     def isempty(self):
         return len(self) == 0
 
@@ -159,6 +172,8 @@ class Lict(list):
         return not self.somekeyed()
 
     #--------------------------------------------------------------------------
+    # Transformations
+
     def select(self, key=None):
         return Lict(*(item for item in self if self._matchkey(item, key)))
 
