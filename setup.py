@@ -26,5 +26,5 @@ setup(
     description='A hybrid list-dict container for building interpolatable python classes',
     packages=find_packages('mod'),
     package_dir={'': 'mod'},
-    python_requires='>=3.6', # `lict` uses python3's f-string and typing
+    python_requires='>=3.5',
 )
