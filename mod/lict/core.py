@@ -160,7 +160,7 @@ class Lict(list):
 
     #--------------------------------------------------------------------------
     def select(self, key=None):
-        return Lict(*(item for item in self if self._getkey(item) == key))
+        return Lict(*(item for item in self if self._matchkey(item, key)))
 
     def group(self, key):
         l = Lict()
