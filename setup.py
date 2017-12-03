@@ -19,7 +19,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='lict',
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/hallmarksrc/lict',
     author='Chi-kwan Chan',
     author_email='ckchan@cfa.harvard.edu',
