@@ -100,6 +100,30 @@ class Lict(list):
             return '['+', '.join(map(repr, self))+']'
 
     #--------------------------------------------------------------------------
+    # Python has multiple ways to access elements from dictionary.
+    # The `[]` operator is equivalent to calling `__getitem__()`.
+    # However, python dictionary also provides the `get()` method.
+    #
+    # In CPython, `dict.__getitem__()` and `dict.get()` are
+    # implemented as `dict_subscript()` and `dict_get_impl()` in C,
+    # respectively.  The two functions are very similar except the
+    # former uses the `__missing__()` method to handle missing keys,
+    # while the later simply take optional default value argument.
+    #
+    # We do not override `__getitem__()` so we may still access the
+    # raw items by indices.
+
+    def get(self, *args):
+        l = len(args)
+        if l > 2:
+            raise TypeError('Lict.get() takes at most 2 arguments')
+        k = None if len(args) == 0 else args[0]
+        f = self.select(k)
+        if len(f) == 0 and l == 2:
+            return Lict(args[1])
+        else:
+            return f.values()
+
     def keys(self):
         return Lict(*dict.fromkeys(self._getkey(item) for item in self))
 

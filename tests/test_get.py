@@ -20,6 +20,27 @@ l2 = Lict(0.1, 0.2, 0.3, 0.4)
 l3 = Lict(0.1, 0.2, meta3=0.3, meta4=0.4)
 l4 = Lict(meta1=0.1, meta2=0.2, meta3=0.3, meta4=0.4)
 
+def test_get():
+    assert l1.get()             == []
+    assert l1.get('meta3')      == []
+    assert l1.get('meta4')      == []
+    assert l1.get('meta5', 0.5) == [0.5]
+
+    assert l2.get()             == [0.1, 0.2, 0.3, 0.4]
+    assert l2.get('meta3')      == []
+    assert l2.get('meta4')      == []
+    assert l2.get('meta5', 0.5) == [0.5]
+
+    assert l3.get()             == [0.1, 0.2]
+    assert l3.get('meta3')      == [0.3]
+    assert l3.get('meta4')      == [0.4]
+    assert l3.get('meta5', 0.5) == [0.5]
+
+    assert l4.get()             == []
+    assert l4.get('meta3')      == [0.3]
+    assert l4.get('meta4')      == [0.4]
+    assert l4.get('meta5', 0.5) == [0.5]
+
 def test_keys():
     assert l1.keys() == []
     assert l2.keys() == [None]
