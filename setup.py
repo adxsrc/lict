@@ -19,12 +19,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='lict',
-    version='0.1.3',
+    version='0.2.0',
     url='https://github.com/hallmarksrc/lict',
     author='Chi-kwan Chan',
     author_email='ckchan@cfa.harvard.edu',
     description='A hybrid list-dict container for building interpolatable python classes',
     packages=find_packages('mod'),
     package_dir={'': 'mod'},
-    python_requires='>=3.5',
+    python_requires='>=3.6', # `lict` assumes that `kwargs` preserves order
 )
