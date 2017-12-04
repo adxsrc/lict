@@ -37,3 +37,21 @@ def test_group():
 
     e = g.select('meta')
     assert e.values() == [l5, l6]
+
+def test_ungroup():
+    l = Lict(l1,b=l2)
+    l.append(  l3)
+    l.append(d=l4)
+    l.append(  l5)
+    l.append(f=l6)
+
+    u = l.ungroup('kind')
+    assert u == [
+         0.1,
+        [0.2,                   ('kind', 'b')],
+        [0.3, ('kind', 'data')               ],
+        [0.4, ('kind', 'data'), ('kind', 'd')],
+        [0.5, ('kind', 'meta')               ],
+        [0.6, ('kind', 'meta'), ('kind', 'f')],
+    ]
+    # TODO: make sure that Lict.ungroup() do not modify l1, l2, ..., l6
