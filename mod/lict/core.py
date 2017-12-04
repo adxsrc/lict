@@ -50,16 +50,20 @@ class Lict(list):
     # Logical `_Pair` getters that do not assume `item` is `_Pair`
 
     @classmethod
+    def _isPair(cls, item):
+        return isinstance(item, cls._Pair)
+
+    @classmethod
     def _getkey(cls, item):
-        return item[0] if isinstance(item, cls._Pair) else None
+        return item[0] if cls._isPair(item) else None
 
     @classmethod
     def _getvalue(cls, item):
-        return item[1] if isinstance(item, cls._Pair) else item
+        return item[1] if cls._isPair(item) else item
 
     @classmethod
     def _getitem(cls, item):
-        return item if isinstance(item, cls._Pair) else cls._Pair((None, item))
+        return item if cls._isPair(item) else cls._Pair((None, item))
 
     @classmethod
     def _matchkey(cls, item, key):
