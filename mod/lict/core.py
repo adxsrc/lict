@@ -103,6 +103,9 @@ class Lict(list):
         else:
             super().append(item)
 
+    def setdefault(self, key, value):
+        return self.selectdefault(key, value).values()
+
     #--------------------------------------------------------------------------
     # Characteristics reporting
 
@@ -168,6 +171,14 @@ class Lict(list):
 
     def select(self, key=None): # TODO: turn results into views
         return Lict(*(item for item in self if self._matchkey(item, key)))
+
+    def selectdefault(self, key, value):
+        f = self.select(key)
+        if f:
+            return f
+        else:
+            self.append(key, value)
+            return Lict(self[-1])
 
     def __repr__(self):
         if '__name__' in self.keys():
