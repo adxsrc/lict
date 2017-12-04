@@ -8,7 +8,7 @@ Its simple, flexible, and transformable design is ideal for building
 interpolatable python classes.
 
 
-## Basic Licts
+## Basic Licts and Interface/Behaviors
 
 A trivial lict does not have any metadata.
 Logically, it is simply a boxed python data object:
@@ -30,6 +30,25 @@ metakey-metadata pairs (MKDPs):
 Any hashable python object `mkey1`, ..., which may be a string like
 `'meta'`, can be used as lict's metakey; any python object `meta1`,
 ..., including another lict, can be used as lict's metadata.
+
+We compare the lict's interface with list, tuple, and dict in the
+following table:
+
+Usage            | Lict                       | Tuple           | List             | Dict
+---              | ---                        | ---             | ---              | ---
+Class            | `Lict`                     | `tuple`         | `list`           | `dict`
+Print            | `[d1, k2:d2, ...]`         | `(d1, d2, ...)` | `[d1, d2, ...]`  | `{k1:d1, k2:d2, ...}`
+Construct        | `l = Lict(d1, k2=d2, ...)` | `t = (d1, ...)` | `l = [d1, ...]`  | `d = {k1:d1, ...}`
+Append           | `l.append(k, v)`           | N/A             | `l.append(v)`    | `d[k] = v`
+Insert           | N/A                        | N/A             | `l.insert(i, v)` | `d[k] = v`
+Set              | N/A                        | N/A             | `l[i] = x`       | `d[k] = v`
+Set if not exist | `l.setdefault(k, v)`       | N/A             | N/A              | `d.setdefault(k, v)`
+Get              | `v = l.get(k)`             | `v = t[i]`      | `v = l[i]`       | `v = l[k]` or `v = d.get(k, default)`
+Delete           | N/A                        | N/A             | `del l[i]`       | `del d[k]`
+Keys             | `l.keys()`                 | `range(len(t))` | `range(len(l))`  | `d` or `d.keys()`
+Values           | `l.values()`               | `t`             | `l`              | `d.values()`
+Pair             | `l.items()`                | `enumerate(t)`  | `enumerate(l)`   | `d.items()`
+Raw item         | `l`                        | `t`             | `l`              | N/A
 
 
 ## Hierarchical Licts
@@ -118,7 +137,7 @@ side-by-side with the original definition, they become
     ]                                    ]
 
 
-## Default Grouping/Mount and Behaviors
+## Default Grouping/Mount
 
 Form (8) demonstrates that the default values of `hierarchical`
 depends on how its metadata are grouped.
