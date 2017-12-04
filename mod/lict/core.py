@@ -104,7 +104,7 @@ class Lict(list):
             super().append(item)
 
     def setdefault(self, key, value):
-        return self.selectdefault(key, value).values()
+        return self.filterdefault(key, value).values()
 
     #--------------------------------------------------------------------------
     # Characteristics reporting
@@ -154,7 +154,7 @@ class Lict(list):
         if l > 2:
             raise TypeError('Lict.get() takes at most 2 arguments')
         k = None if len(args) == 0 else args[0]
-        f = self.select(k)
+        f = self.filter(k)
         if len(f) == 0 and l == 2:
             return Lict(args[1])
         else:
@@ -169,11 +169,11 @@ class Lict(list):
     def items(self): # TODO: turn results into views
         return Lict(*(self._getitem(item) for item in self))
 
-    def select(self, key=None): # TODO: turn results into views
+    def filter(self, key=None): # TODO: turn results into views
         return Lict(*(item for item in self if self._matchkey(item, key)))
 
-    def selectdefault(self, key, value):
-        f = self.select(key)
+    def filterdefault(self, key, value):
+        f = self.filter(key)
         if f:
             return f
         else:
@@ -182,7 +182,7 @@ class Lict(list):
 
     def __repr__(self):
         if '__name__' in self.keys():
-            return '_'.join(self.select('__name__').values())
+            return '_'.join(self.filter('__name__').values())
         else:
             return '['+', '.join(map(repr, self))+']'
 
@@ -195,7 +195,7 @@ class Lict(list):
             if isinstance(item, self._Pair):
                 raise ValueError('group() works only for unkeyed lict')
             if isinstance(item, Lict):
-                s = item.select(key)
+                s = item.filter(key)
                 if s:
                     for k in s.values():
                         l.append(k, item)
@@ -212,7 +212,7 @@ class Lict(list):
                 k, item = item
                 if not isinstance(item, Lict):
                     item = Lict(item)
-                if k not in item.select(key).values():
+                if k not in item.filter(key).values():
                     item.append(key, k)
             l.append(item)
         return l
@@ -224,7 +224,7 @@ class Lict(list):
             g = self.values().group(keys[0])
             l = Lict()
             for k in g.keys():
-                f = g.select(k).values() # must be non-empty
+                f = g.filter(k).values() # must be non-empty
                 t = f.tree(*keys[1:])
                 l.append(k, t[0] if t.istrivial() else t)
             return l

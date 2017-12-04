@@ -59,19 +59,19 @@ def test_items():
     assert l3.items() == [(None,   0.1), (None,   0.2), ('meta3',0.3), ('meta4',0.4)]
     assert l4.items() == [('meta1',0.1), ('meta2',0.2), ('meta3',0.3), ('meta4',0.4)]
 
-def test_select():
-    assert l1.select()        == []
-    assert l1.select('meta3') == []
-    assert l1.select('meta4') == []
+def test_filter():
+    assert l1.filter()        == []
+    assert l1.filter('meta3') == []
+    assert l1.filter('meta4') == []
 
-    assert l2.select()        == [0.1, 0.2, 0.3, 0.4]
-    assert l2.select('meta3') == []
-    assert l2.select('meta4') == []
+    assert l2.filter()        == [0.1, 0.2, 0.3, 0.4]
+    assert l2.filter('meta3') == []
+    assert l2.filter('meta4') == []
 
-    assert l3.select()        == [0.1, 0.2]
-    assert l3.select('meta3') == [('meta3', 0.3)]
-    assert l3.select('meta4') == [('meta4', 0.4)]
+    assert l3.filter()        == [0.1, 0.2]
+    assert l3.filter('meta3') == [('meta3', 0.3)]
+    assert l3.filter('meta4') == [('meta4', 0.4)]
 
-    assert l4.select()        == []
-    assert l4.select('meta3') == [('meta3', 0.3)]
-    assert l4.select('meta4') == [('meta4', 0.4)]
+    assert l4.filter()        == []
+    assert l4.filter('meta3') == [('meta3', 0.3)]
+    assert l4.filter('meta4') == [('meta4', 0.4)]

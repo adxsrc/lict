@@ -29,13 +29,13 @@ def test_group():
     assert g.keys()   == [None, 'data', 'meta']
     assert g.values() == [l1, l2, l3, l4, l5, l6]
 
-    d = g.select(None)
+    d = g.filter(None)
     assert d.values() == [l1, l2]
 
-    d = g.select('data')
+    d = g.filter('data')
     assert d.values() == [l3, l4]
 
-    e = g.select('meta')
+    e = g.filter('meta')
     assert e.values() == [l5, l6]
 
 def test_ungroup():

@@ -15,19 +15,19 @@
 
 from lict import *
 
-def test_selectdefault():
+def test_filterdefault():
     l = Lict()
     assert l == []
 
-    v = l.selectdefault('meta1', 0.1)
+    v = l.filterdefault('meta1', 0.1)
     assert l == [('meta1', 0.1)]
     assert v == [('meta1', 0.1)]
 
-    v = l.selectdefault('meta1', 0.2)
+    v = l.filterdefault('meta1', 0.2)
     assert l == [('meta1', 0.1)]
     assert v == [('meta1', 0.1)]
 
-    v = l.selectdefault('meta2', 0.2)
+    v = l.filterdefault('meta2', 0.2)
     assert l == [('meta1', 0.1), ('meta2', 0.2)]
     assert v == [('meta2', 0.2)]
 
