@@ -23,6 +23,7 @@ class Lict(list):
     ideal for building interpolatable python classes.
 
     """
+    __slots__ = ()
 
     #==========================================================================
     # Nested "private" class to hold metakey-metadata pair
