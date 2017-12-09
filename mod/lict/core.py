@@ -66,8 +66,10 @@ class Lict(list):
         return item if cls._isPair(item) else cls._Pair((None, item))
 
     @classmethod
-    def _matchkey(cls, item, key):
-        return key == cls._getkey(item)
+    def _matchkey(cls, item, key, cmp=None):
+        if not cmp:
+            cmp = lambda a, b: a == b
+        return cmp(key, cls._getkey(item))
 
     #==========================================================================
     # Input and initialization
@@ -103,8 +105,8 @@ class Lict(list):
         else:
             super().append(item)
 
-    def setdefault(self, key, value):
-        return self.filterdefault(key, value).values()
+    def setdefault(self, key, value, cmp=None):
+        return self.filterdefault(key, value, cmp=cmp).values()
 
     #--------------------------------------------------------------------------
     # Characteristics reporting
@@ -149,12 +151,12 @@ class Lict(list):
     # We do not override `__getitem__()` so we may still access the
     # raw items by indices.
 
-    def get(self, *args):
+    def get(self, *args, cmp=None):
         l = len(args)
         if l > 2:
             raise TypeError('Lict.get() takes at most 2 arguments')
         k = None if len(args) == 0 else args[0]
-        f = self.filter(k)
+        f = self.filter(k, cmp=cmp)
         if len(f) == 0 and l == 2:
             return Lict(args[1])
         else:
@@ -169,11 +171,11 @@ class Lict(list):
     def items(self): # TODO: turn results into views
         return Lict(*(self._getitem(item) for item in self))
 
-    def filter(self, key=None): # TODO: turn results into views
-        return Lict(*(item for item in self if self._matchkey(item, key)))
+    def filter(self, key=None, cmp=None): # TODO: turn results into views
+        return Lict(*(item for item in self if self._matchkey(item, key, cmp=cmp)))
 
-    def filterdefault(self, key, value):
-        f = self.filter(key)
+    def filterdefault(self, key, value, cmp=None):
+        f = self.filter(key, cmp=cmp)
         if f:
             return f
         else:
