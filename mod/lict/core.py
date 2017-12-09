@@ -159,21 +159,21 @@ class Lict(list):
         k = None if len(args) == 0 else args[0]
         f = self.filter(k, cmp=cmp)
         if len(f) == 0 and l == 2:
-            return Lict(args[1])
+            return type(self)(args[1])
         else:
             return f.values()
 
     def keys(self): # TODO: turn results into views
-        return Lict(*dict.fromkeys(self._getkey(item) for item in self))
+        return type(self)(*dict.fromkeys(self._getkey(item) for item in self))
 
     def values(self): # TODO: turn results into views
-        return Lict(*(self._getvalue(item) for item in self))
+        return type(self)(*(self._getvalue(item) for item in self))
 
     def items(self): # TODO: turn results into views
-        return Lict(*(self._getitem(item) for item in self))
+        return type(self)(*(self._getitem(item) for item in self))
 
     def filter(self, key=None, cmp=None): # TODO: turn results into views
-        return Lict(*(item for item in self if self._matchkey(item, key, cmp=cmp)))
+        return type(self)(*(item for item in self if self._matchkey(item, key, cmp=cmp)))
 
     def filterdefault(self, key, value, cmp=None):
         f = self.filter(key, cmp=cmp)
@@ -181,7 +181,7 @@ class Lict(list):
             return f
         else:
             self.append(key, value)
-            return Lict(self[-1])
+            return type(self)(self[-1])
 
     def __repr__(self):
         if '__name__' in self.keys():
@@ -193,7 +193,7 @@ class Lict(list):
     # Transformations
 
     def group(self, key):
-        l = Lict()
+        l = type(self)()
         for item in self:
             if isinstance(item, self._Pair):
                 raise ValueError('group() works only for unkeyed lict')
@@ -209,12 +209,12 @@ class Lict(list):
         return l
 
     def ungroup(self, key):
-        l = Lict()
+        l = type(self)()
         for item in self:
             if isinstance(item, self._Pair):
                 k, item = item
                 if not isinstance(item, Lict):
-                    item = Lict(item)
+                    item = type(self)(item)
                 if k not in item.filter(key).values():
                     item.append(key, k)
             l.append(item)
@@ -225,7 +225,7 @@ class Lict(list):
             return self
         else:
             g = self.values().group(keys[0])
-            l = Lict()
+            l = type(self)()
             for k in g.keys():
                 f = g.filter(k).values() # must be non-empty
                 t = f.tree(*keys[1:])
